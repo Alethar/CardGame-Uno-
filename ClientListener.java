@@ -21,6 +21,8 @@ public class ClientListener extends Thread
 
     private Game game;
 
+    private String prevString = null;
+
 
     /**
      * Constructor that takes a Socket and feeds client inputs from the Socket
@@ -58,46 +60,56 @@ public class ClientListener extends Thread
             try
             {
                 String clientInput = in.readUTF();
-
-                int clientID = Integer.parseInt( clientInput.substring( 0, 1 ) );
-                // client number 0 - 3
-                if ( clientID < 4 )
+                if ( !clientInput.equals( prevString )
+                    || clientInput.substring( 1, 2 ).equals( "u" ) )
                 {
-                    if ( clientInput.substring( 1, 2 ).equals( "u" ) )
+                    System.out.println( "It is being taken as input" );
+                    int clientID = Integer.parseInt( clientInput.substring( 0, 1 ) );
+                    // client number 0 - 3
+                    System.out
+                        .println( "Client " + clientID + " Inputs " + clientInput.substring( 1 ) );
+                    if ( clientID < 4 )
                     {
-                        game.uno( clientID );
-                    }
-                    else
-                    {
-                        if ( !( game.getPlayers()[clientID].getHand()
-                            .get( Integer
-                                .parseInt( clientInput.substring( 2, 3 ) ) ) instanceof Wild ) )
+                        if ( clientInput.substring( 1, 2 ).equals( "u" ) )
                         {
-
-                            game.cardPlay( clientID,
-
-                                Integer.parseInt( clientInput.substring( 2, 3 ) ) );
+                            game.uno( clientID );
                         }
                         else
                         {
-                            game.cardPlay( clientID,
+                            if ( !( game.getPlayers()[clientID].getHand()
+                                .get( Integer
+                                    .parseInt( clientInput.substring( 2, 3 ) ) ) instanceof Wild ) )
+                            {
 
-                                Integer.parseInt( clientInput.substring( 2, 3 ) ),
-                                clientInput.substring( 3 ) );
+                                game.cardPlay( clientID,
+
+                                    Integer.parseInt( clientInput.substring( 2, 3 ) ) );
+                            }
+                            else
+                            {
+                                game.cardPlay( clientID,
+
+                                    Integer.parseInt( clientInput.substring( 2, 3 ) ),
+                                    clientInput.substring( 3 ) );
+                            }
+
                         }
-
+                        game.setTurnDone( true );
                     }
-                    game.setTurnDone( true );
+                    else// input from server instead of clients
+                    {
+                        System.out.println( "Connection Lost" );
+                        System.exit( 0 );
+                    }
                 }
-                else// input from server instead of clients
+                else
                 {
-                    System.out.println("Connection Lost");
-                    System.exit( 0 );
+                    System.out.println( "Not valid input" );
                 }
             }
             catch ( IOException e )
             {
-                System.out.println("Connection Lost");
+                System.out.println( "Connection Lost" );
                 System.exit( 0 );
             }
         }

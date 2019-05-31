@@ -215,7 +215,7 @@ public class Game
         Card c = players[player].getHand().get( pos );
         if ( c instanceof NumberCard )
         {
-            setPile( players[player].getHand().get( pos ) );
+            pile = players[player].getHand().get( pos ) ;
             setNumber( ( (NumberCard)c ).getNumber() );
             setColor( c.getColor() );
             server.broadcast( player + "p" + ((NumberCard)c ).getNumber() + c.getColor() );
@@ -231,7 +231,7 @@ public class Game
         {
             if ( ( pile instanceof ActionCard && !( pile instanceof Wild ) ) )
             {
-                setPile( players[player].getHand().get( pos ) );
+                pile = players[player].getHand().get( pos ) ;
                 ( (ActionCard)( pile ) ).doAction( player );
                 players[player].getHand().remove( pos );
             }
@@ -254,7 +254,6 @@ public class Game
         setPile( players[player].getHand().get( pos ) );
         ( (Wild)( pile ) ).doAction( player, color );
         players[player].getHand().remove( pos );
-        //TODO if()
         server.broadcast( player + "pw" + color );
         server.broadcast( "c" + color );
         server.broadcast( "n" + number );
