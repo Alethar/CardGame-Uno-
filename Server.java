@@ -125,6 +125,7 @@ public class Server
     public void broadcast( String str )
 
     {
+        System.out.println("***TESTING*** Output: " + str);
         try
         {
             if ( out0 != null )

@@ -139,6 +139,9 @@ public class Game
             }
             turnDone = false;
             currplayer = currplayer % 4;
+            if(currplayer == -1) {
+                currplayer = 3;
+            }
             players[currplayer].turn();
             while ( turnDone == false )
             {
@@ -212,6 +215,7 @@ public class Game
 
     public void cardPlay( int player, int pos )
     {
+        System.out.println("***TESTING*** Recieved: " + player + pos);
         Card c = players[player].getHand().get( pos );
         if ( c instanceof NumberCard )
         {
@@ -229,8 +233,10 @@ public class Game
         }
         else
         {
-            if ( ( pile instanceof ActionCard && !( pile instanceof Wild ) ) )
+            System.out.println("***TESTING*** Recieved: ACTION CARD PLAYED" );
+            if ( !( pile instanceof Wild ) )
             {
+                System.out.println("***TESTING*** Recieved: NON WILD ACTION CARD PLAYED" );
                 pile = players[player].getHand().get( pos ) ;
                 ( (ActionCard)( pile ) ).doAction( player );
                 players[player].getHand().remove( pos );
@@ -482,5 +488,16 @@ public class Game
     public void setCurrplayer( int currplayer )
     {
         this.currplayer = currplayer;
+    }
+    /**
+     * 
+     * main method. Starts a new Game by creating a game object.
+     * @param args no arguments needed for main method
+     */
+    public static void main( String args[] )
+    {
+        
+        Game g = new Game();
+        
     }
 }

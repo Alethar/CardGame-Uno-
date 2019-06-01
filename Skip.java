@@ -55,6 +55,6 @@ public class Skip extends ActionCard
             getCurrGame().setCurrplayer( x );
         }
         getCurrGame().getServer().broadcast( idNum + "ps" );
-        getCurrGame().getServer().broadcast( "s" );
+        getCurrGame().getServer().broadcast( "k" );
     }
 }

@@ -2,7 +2,7 @@
  * 
  * represents a number card
  *
- * @author Benjamin
+ * @author Eric
  * @version May 27, 2019
  * @author Period: 3
  * @author Assignment: UnoGame
