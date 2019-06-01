@@ -19,7 +19,7 @@ public class Server
     // initialize socket and input stream
     int port;
     
-
+    ServerSocket ss = null;
     private Socket s0 = null;
 
     private Socket s1 = null;
@@ -47,10 +47,16 @@ public class Server
      *            the game server is sending input to (by initializing
      *            clientlistener)
      */
-    public Server( Game game ) // finds an unused port and opens it
+    public Server( Game game ) // uses port 5000 - 5003 by default
     {
-        Random r = new Random();
-        port = r.nextInt( 6000 - 5000 + 1 ) + 5000 - 1;
+        port = 5000;
+        try
+        {
+            ss = new ServerSocket( port );
+        }
+        catch ( IOException e )
+        {
+        }
     }
 
 
@@ -62,29 +68,28 @@ public class Server
      */
     public void addClient()
     {
-        port++;
         System.out.println("Port: " + port);
         try
         {
-            ServerSocket s = new ServerSocket( port );
+            
             if ( out0 == null )
             {
-                s0 = s.accept();
+                s0 = ss.accept();
                 out0 = new DataOutputStream( s0.getOutputStream() );
             }
             else if ( out1 == null )
             {
-                s1 = s.accept();
+                s1 = ss.accept();
                 out1 = new DataOutputStream( s1.getOutputStream() );
             }
             else if ( out2 == null )
             {
-                s2 = s.accept();
+                s2 = ss.accept();
                 out2 = new DataOutputStream( s2.getOutputStream() );
             }
             else if ( out3 == null )
             {
-                s3 = s.accept();
+                s3 = ss.accept();
                 out3 = new DataOutputStream( s3.getOutputStream() );
             }
 

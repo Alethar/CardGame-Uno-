@@ -76,21 +76,43 @@ public class ClientListener extends Thread
                         }
                         else
                         {
-                            if ( !( game.getPlayers()[clientID].getHand()
-                                .get( Integer
-                                    .parseInt( clientInput.substring( 2, 3 ) ) ) instanceof Wild ) )
+                            if ( clientInput.substring( 1, 2 ).equals( "p" ) )
                             {
+                                if ( !( game.getPlayers()[clientID].getHand()
+                                    .get( Integer.parseInt(
+                                        clientInput.substring( 2, 3 ) ) ) instanceof Wild ) )
+                                {
 
-                                game.cardPlay( clientID,
+                                    game.cardPlay( clientID,
 
-                                    Integer.parseInt( clientInput.substring( 2, 3 ) ) );
+                                        Integer.parseInt( clientInput.substring( 2, 3 ) ) );
+                                }
+                                else
+                                {
+                                    game.cardPlay( clientID,
+
+                                        Integer.parseInt( clientInput.substring( 2, 3 ) ),
+                                        clientInput.substring( 3 ) );
+                                }
                             }
                             else
                             {
-                                game.cardPlay( clientID,
+                                if ( !( game.getPlayers()[clientID].getHand()
+                                    .get( Integer.parseInt(
+                                        clientInput.substring( 1, 2 ) ) ) instanceof Wild ) )
+                                {
 
-                                    Integer.parseInt( clientInput.substring( 2, 3 ) ),
-                                    clientInput.substring( 3 ) );
+                                    game.cardPlay( clientID,
+
+                                        Integer.parseInt( clientInput.substring( 1, 2 ) ) );
+                                }
+                                else
+                                {
+                                    game.cardPlay( clientID,
+
+                                        Integer.parseInt( clientInput.substring( 1, 2 ) ),
+                                        clientInput.substring( 2 ) );
+                                }
                             }
 
                         }

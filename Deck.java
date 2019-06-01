@@ -42,44 +42,44 @@ public class Deck
         {
             if ( x == 0 )
             {
-                shuffle.add( new NumberCard( "Red", x, currGame ) );
-                shuffle.add( new NumberCard( "Green", x, currGame ) );
-                shuffle.add( new NumberCard( "Yellow", x, currGame ) );
-                shuffle.add( new NumberCard( "Blue", x, currGame ) );
+                shuffle.add( new NumberCard( "red", x, currGame ) );
+                shuffle.add( new NumberCard( "green", x, currGame ) );
+                shuffle.add( new NumberCard( "yellow", x, currGame ) );
+                shuffle.add( new NumberCard( "blue", x, currGame ) );
             }
             else
             {
-                shuffle.add( new NumberCard( "Red", x, currGame ) );
-                shuffle.add( new NumberCard( "Green", x, currGame ) );
-                shuffle.add( new NumberCard( "Yellow", x, currGame ) );
-                shuffle.add( new NumberCard( "Blue", x, currGame ) );
-                shuffle.add( new NumberCard( "Red", x, currGame ) );
-                shuffle.add( new NumberCard( "Green", x, currGame ) );
-                shuffle.add( new NumberCard( "Yellow", x, currGame ) );
-                shuffle.add( new NumberCard( "Blue", x, currGame ) );
+                shuffle.add( new NumberCard( "red", x, currGame ) );
+                shuffle.add( new NumberCard( "green", x, currGame ) );
+                shuffle.add( new NumberCard( "yellow", x, currGame ) );
+                shuffle.add( new NumberCard( "blue", x, currGame ) );
+                shuffle.add( new NumberCard( "red", x, currGame ) );
+                shuffle.add( new NumberCard( "green", x, currGame ) );
+                shuffle.add( new NumberCard( "yellow", x, currGame ) );
+                shuffle.add( new NumberCard( "blue", x, currGame ) );
             }
 
         }
         for ( int x = 0; x < 2; x++ )
         {
-            shuffle.add( new PlusTwo( "Red", currGame ) );
-            shuffle.add( new PlusTwo( "Green", currGame ) );
-            shuffle.add( new PlusTwo( "Yellow", currGame ) );
-            shuffle.add( new PlusTwo( "Blue", currGame ) );
+            shuffle.add( new PlusTwo( "red", currGame ) );
+            shuffle.add( new PlusTwo( "green", currGame ) );
+            shuffle.add( new PlusTwo( "yellow", currGame ) );
+            shuffle.add( new PlusTwo( "blue", currGame ) );
         }
         for ( int x = 0; x < 2; x++ )
         {
-            shuffle.add( new Skip( "Red", currGame ) );
-            shuffle.add( new Skip( "Green", currGame ) );
-            shuffle.add( new Skip( "Yellow", currGame ) );
-            shuffle.add( new Skip( "Blue", currGame ) );
+            shuffle.add( new Skip( "red", currGame ) );
+            shuffle.add( new Skip( "green", currGame ) );
+            shuffle.add( new Skip( "yellow", currGame ) );
+            shuffle.add( new Skip( "blue", currGame ) );
         }
         for ( int x = 0; x < 2; x++ )
         {
-            shuffle.add( new Reverse( "Red", currGame ) );
-            shuffle.add( new Reverse( "Green", currGame ) );
-            shuffle.add( new Reverse( "Yellow", currGame ) );
-            shuffle.add( new Reverse( "Blue", currGame ) );
+            shuffle.add( new Reverse( "red", currGame ) );
+            shuffle.add( new Reverse( "green", currGame ) );
+            shuffle.add( new Reverse( "yellow", currGame ) );
+            shuffle.add( new Reverse( "blue", currGame ) );
         }
         for ( int x = 0; x < 4; x++ )
         {

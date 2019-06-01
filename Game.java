@@ -260,7 +260,6 @@ public class Game
         setPile( players[player].getHand().get( pos ) );
         ( (Wild)( pile ) ).doAction( player, color );
         players[player].getHand().remove( pos );
-        server.broadcast( player + "pw" + color );
         server.broadcast( "c" + color );
         server.broadcast( "n" + number );
         System.out.println("Player " + (player + 1) + " played " + color);
