@@ -60,6 +60,6 @@ public class PlusTwo extends ActionCard
             getCurrGame().setCurrplayer( x );
         }
         getCurrGame().getServer().broadcast( idNum + "pp2" );
-        getCurrGame().getServer().broadcast( "skip" );
+        getCurrGame().getServer().broadcast( "k" );
     }
 }

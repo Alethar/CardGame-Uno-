@@ -86,9 +86,10 @@ public class Deck
             shuffle.add( new Wild( currGame ) );
             shuffle.add( new PlusFour( currGame ) );
         }
+        Collections.shuffle( shuffle );
         for ( int x = 0; x < shuffle.size(); x++ )
         {
-            deck.add( shuffle.get( (int)( Math.random() * ( shuffle.size() ) ) ) );
+            deck.add( shuffle.get( x ) );
         }
     }
 

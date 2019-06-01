@@ -41,6 +41,7 @@ public class PlusFour extends Wild
     }
 
 
+    
     /**
      * action of the plus four card
      * 
@@ -49,6 +50,7 @@ public class PlusFour extends Wild
      * @param color
      *            color it is going to be changed to
      */
+    @Override
     public void doAction( int idNum, String color )
     {
         if ( getCurrGame().getDirection() )
@@ -95,6 +97,6 @@ public class PlusFour extends Wild
 
         }
         getCurrGame().getServer().broadcast( idNum + "pp4" );
-        getCurrGame().getServer().broadcast( "skip" );
+        getCurrGame().getServer().broadcast( "k" );
     }
 }
