@@ -18,8 +18,7 @@ public class Server
 {
     // initialize socket and input stream
     int port;
-
-    private Socket initiator = null;
+    
 
     private Socket s0 = null;
 
@@ -28,8 +27,6 @@ public class Server
     private Socket s2 = null;
 
     private Socket s3 = null;
-
-    private DataOutputStream initiout = null;
 
     private DataOutputStream out0 = null;
 
@@ -52,55 +49,8 @@ public class Server
      */
     public Server( Game game ) // finds an unused port and opens it
     {
-        port = 5000;
-        while(!portAvailable(port)) {
-            port += 5;
-        }
-    }
-
-    /**
-     * 
-     * TODO Write your method description here.
-     * @param port
-     * @return
-     */
-    public static boolean portAvailable( int port )
-    {
-
-        ServerSocket servs = null;
-        DatagramSocket datas = null;
-        try
-        {
-            servs = new ServerSocket( port );
-            servs.setReuseAddress( true );
-            datas = new DatagramSocket( port );
-            datas.setReuseAddress( true );
-            return true;
-        }
-        catch ( IOException e )
-        {
-        }
-        finally
-        {
-            if ( datas != null )
-            {
-                datas.close();
-            }
-
-            if ( servs != null )
-            {
-                try
-                {
-                    servs.close();
-                }
-                catch ( IOException e )
-                {
-                    /* should not be thrown */
-                }
-            }
-        }
-
-        return false;
+        Random r = new Random();
+        port = r.nextInt( 6000 - 5000 + 1 ) + 5000 - 1;
     }
 
 
@@ -113,7 +63,7 @@ public class Server
     public void addClient()
     {
         port++;
-        System.out.println( "Port: " + port );
+        System.out.println("Port: " + port);
         try
         {
             ServerSocket s = new ServerSocket( port );
@@ -176,7 +126,7 @@ public class Server
     public void broadcast( String str )
 
     {
-        System.out.println( "***TESTING*** Output: " + str );
+        System.out.println("***TESTING*** Output: " + str);
         try
         {
             if ( out0 != null )
