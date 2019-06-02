@@ -39,7 +39,6 @@ public class Wild extends ActionCard
     {
         getCurrGame().setColor( color );
         getCurrGame().getServer().broadcast( idNum + "pw" + color );
-        getCurrGame().getServer().broadcast( "c" + color );
     }
 
 

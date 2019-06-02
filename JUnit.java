@@ -161,128 +161,52 @@ public class JUnit
     }
     
     /**
-     * Game Class JUnit - networking, tested in spreadsheets
+     * Game Class JUnit - networking, parts of networking tested in spreadsheets
      */
     
     /**
      * Game Class JUnit
      */
-    @Test
-    public void gameConstructor()
-    {
-    }
-
-
-    @Test
-    public void gameRunGame()
-    {
-
-    }
-
-
-    @Test
-    public void gameUno()
-    {
-
-    }
-
-
-    @Test
-    public void gameCardPlay()
-    {
-
-    }
-
-
+    
     @Test
     public void gameCheckWin()
     {
-        Deck d = new Deck( game );
-
+        assertEquals(true, game.checkWin());
     }
-
-
+    
     @Test
-    public void gameEndGame()
+    public void gameSetPile()
     {
-
+        game.setPile( unoCard );
+        assertEquals(game.getPile(), unoCard);
     }
-
-
+    
     @Test
     public void gameGetPile()
     {
-
+        game.setPile(unoCard);
+        assertEquals(game.getPile(), unoCard);
     }
 
 
     @Test
     public void gameGetGameDeck()
     {
-
+        assertEquals(game.getDeck() instanceof Deck, true);
     }
 
 
     @Test
     public void gameGetPlayers()
     {
-
+        assertEquals(game.getPlayers().length > 0, true);
     }
 
-
     @Test
-    public void gameSetColor()
+    public void gameChangeCurrPlayer()
     {
-
-    }
-
-
-    @Test
-    public void gameGetColor()
-    {
-
-    }
-
-
-    @Test
-    public void gameSetNumber()
-    {
-
-    }
-
-
-    @Test
-    public void gameGetNumber()
-    {
-
-    }
-
-
-    @Test
-    public void gameGetDirection()
-    {
-
-    }
-
-
-    @Test
-    public void gameSetDirection()
-    {
-
-    }
-
-
-    @Test
-    public void gameGetCurrPlayer()
-    {
-
-    }
-
-
-    @Test
-    public void gameSetCurrPlayer()
-    {
-
+        game.changeCurrplayer( 1 );
+        assertEquals(game.getCurrplayer(), 1);
     }
     
     /**
@@ -306,23 +230,37 @@ public class JUnit
     }
     
     @Test
-    public void plusFourDoAction()
+    public void plusFourDoActionFirstCase()
     {
-        Player p5 = new Player(1, game);
+        Player p5 = new Player(2, game);
+        game.setDirection( true );
         int x = game.getCurrplayer();
-        uno5.doAction( p.getIdNum(), "Yellow" );
+        int handnum = game.getPlayers()[p5.getIdNum() + 1].getHand().size();
+        uno5.doAction( p5.getIdNum(), "Yellow" );
+        
+        
         if(game.getDirection())
         {
-            assertEquals(game.getPlayers()[p.getIdNum() + 1].getHand(), game.getPlayers()[p.getIdNum() + 1].getHand().size() + 4);
+            assertEquals(game.getPlayers()[p5.getIdNum() + 1].getHand().size(), handnum + 4);
             assertEquals(game.getColor(), "Yellow");
             x++;
             if(x == 4)
             {
                 x = 0;
+                assertEquals(p.getIdNum(), 0);
             }
             assertEquals(game.getCurrplayer(), x);
         }
-        else
+        
+    }
+    
+    @Test
+    public void plusFourDoActionSecondCase()
+    {
+        int x = game.getCurrplayer();
+        uno5.doAction( p.getIdNum(), "Yellow" );
+        game.setDirection( false );
+        if(game.getDirection() == false)
         {
             assertEquals(game.getPlayers()[p.getIdNum() - 1].getHand().size(), game.getPlayers()[p.getIdNum() + 1].getHand().size() + 4);
             assertEquals(game.getColor(), "Yellow");
@@ -348,23 +286,36 @@ public class JUnit
     }
     
     @Test 
-    public void plusTwoDoActionNormalCase()
+    public void plusTwoDoActionFirstCase()
+    {
+        Player p7 = new Player(1, game );
+        int x = game.getCurrplayer();
+        int handsize = game.getPlayers()[p7.getIdNum() + 1].getHand().size();
+        game.setDirection( true );
+        uno1.doAction( p7.getIdNum() );
+        assertEquals( game.getPlayers()[p7.getIdNum() + 1].getHand().size() - handsize, 2 );
+        
+        if ( game.getDirection() )
+        {
+            x++;
+            if ( x > 3 )
+            {
+                x = 0;
+            }
+            assertEquals(game.getCurrplayer(), x);
+        }
+    }
+    
+    @Test 
+    public void plusTwoDoActionSecondCase()
     {
         Player p1 = new Player( 1, game );
         int x = game.getCurrplayer();
         int handsize = game.getPlayers()[p1.getIdNum() + 1].getHand().size();
         uno1.doAction( p1.getIdNum() );
         assertEquals( game.getPlayers()[p1.getIdNum() + 1].getHand().size() - handsize, 2 );
-        if ( game.getDirection() )
-        {
-            x++;
-            if ( x == 4 )
-            {
-                x = 0;
-            }
-            assertEquals( game.getCurrplayer(), x );
-        }
-        else
+        game.setDirection( false );
+        if(game.getDirection() == false)
         {
             x--;
             if ( x == -1 )
@@ -407,32 +358,15 @@ public class JUnit
         assertEquals("Blue", unoCard.getColor());
     }
     @Test
-    public void skipDoAction()
+    public void skipDoActionFirstCase()
     {
-        if(game.getDirection())
-        {
-            int x = game.getCurrplayer();
-            unoCard.doAction(p.getIdNum());
-            if(x + 1 == 4) {
-                x = 0;
-            }
-            assertEquals(game.getCurrplayer(), x);
-
-        }
-        if(game.getDirection() == false)
-        {
-            int x = game.getCurrplayer();
-            unoCard.doAction(p.getIdNum());
-            if(x - 1 == -1) {
-                x = 3;
-            }
-            assertEquals(game.getCurrplayer(), x);
-
-        }
+        Player p6 = new Player(3, game);
+        game.setDirection( true );
+        game.setCurrplayer( 1 );
         if ( game.getDirection() )
         {
             int x = game.getCurrplayer();
-            unoCard.doAction( p.getIdNum() );
+            unoCard.doAction( p6.getIdNum() );
             int nextplayer = x + 1;
             if ( nextplayer == 4 )
             {
@@ -440,7 +374,13 @@ public class JUnit
             }
             assertEquals( game.getCurrplayer(), nextplayer );
         }
-        else
+        
+    }
+    @Test
+    public void skipDoActionSecondCase()
+    {
+        game.setDirection( false );
+        if(game.getDirection() == false)
         {
             int x = game.getCurrplayer();
             unoCard.doAction( p.getIdNum() );
@@ -450,7 +390,6 @@ public class JUnit
                 nextplayer = 3;
             }
             assertEquals( game.getCurrplayer(), nextplayer );
-
         }
     }
     
@@ -541,6 +480,11 @@ public class JUnit
         assertEquals(p.isUnoInvul(), true);
     }
     
+    @Test
+    public void playerIsPlayable()
+    {
+        
+    }
     
     /**
      * NumberCard Class JUnit completed
@@ -568,10 +512,5 @@ public class JUnit
         assertEquals(game.getColor(), n.getColor());
         assertEquals(game.getNumber(), n.getNumber());
     }
-    
-    
-    
-    
-    
 
 }
