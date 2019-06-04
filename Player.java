@@ -63,7 +63,7 @@ public class Player
         }
         else if ( c instanceof Reverse )
         {
-            game.getServer().broadcast( idNum + "dr" );
+            game.getServer().broadcast( idNum + "dr" + c.getColor() );
         }
         else if ( c instanceof Wild )
         {
@@ -71,7 +71,7 @@ public class Player
         }
         else if ( c instanceof Skip )
         {
-            game.getServer().broadcast( idNum + "ds" );
+            game.getServer().broadcast( idNum + "ds" + c.getColor() );
         }
 
         unoInvul = false;
@@ -106,72 +106,29 @@ public class Player
 
     /**
      * 
-     * completes the player's turn
+     * completes the player's turn if had no cards to play, draws otherwise
+     * prompts client for decision (to its turn method)
      */
     public void turn()
     {
-        // this loop checks if current hand has card to play, otherwise
-        // draws until has a card that can play and plays it
         Card pile = game.getPile();
         boolean draw = true;
         for ( Card c : hand )
         {
             for ( int x = 0; x < hand.size(); x++ )
             {
-                if(isPlayable(x)) {
+                if ( isPlayable( x ) )
+                {
                     draw = false;
                 }
             }
         }
 
-        Card drew = null;
         if ( draw == true )
         {
+            drawCard();
             game.getServer().broadcast( idNum + "a" );
-        }
-        while ( draw == true )
-        {
-            drew = drawCard();
-            if ( drew instanceof ActionCard )
-            {
-                if ( !( drew instanceof PlusTwo ) || pile.getColor().equals( drew.getColor() ) )
-                {
-                    draw = false;
-                }
-            }
-            else if ( drew instanceof NumberCard )
-            {
-                if ( game.getPile() instanceof ActionCard )
-                {
-                    if ( drew.getColor().equals( pile.getColor() ) )
-                    {
-                        draw = false;
-                    }
-                }
-                else
-                {
-                    if ( drew.getColor().equals( pile.getColor() )
-                        || ( (NumberCard)drew ).getNumber() == ( (NumberCard)pile ).getNumber() )
-                    {
-                        draw = false;
-                    }
-
-                }
-            }
-        }
-        if ( drew != null )
-        {
-            if ( drew instanceof NumberCard )
-            {
-                game.cardPlay( idNum, hand.indexOf( drew ) );
-                game.getServer().broadcast( idNum + "p" );
-            }
-            else
-            {
-
-                game.cardPlay( idNum, hand.indexOf( drew ) );
-
-            }
+            game.setTurnDone( true );
         }
         else
         {
@@ -192,25 +149,33 @@ public class Player
     }
 
 
+    /**
+     * 
+     * checks if card is playable
+     * 
+     * @param index
+     *            of card to check
+     * @return is playable or not
+     */
     public boolean isPlayable( int index )
     {
         if ( hand.get( index ) instanceof NumberCard )
         {
-            if ( ((NumberCard)hand.get( index )).getNumber() == game.getNumber()
-                || ((NumberCard)hand.get( index )).getColor().equals( game.getColor() ) )// if
-                                                                     // number
-                                                                     // matches
-                                                                     // current
-                                                                     // number
+            if ( ( (NumberCard)hand.get( index ) ).getNumber() == game.getNumber()
+                || ( (NumberCard)hand.get( index ) ).getColor().equals( game.getColor() ) )// if
+            // number
+            // matches
+            // current
+            // number
             {
                 return true;
             }
         }
-        else//is action card
+        else// is action card
         {
             if ( hand.get( index ) instanceof PlusTwo )
             {
-                if ( ((PlusTwo)hand.get( index )).getColor().equals( game.getColor() ) ) 
+                if ( ( (PlusTwo)hand.get( index ) ).getColor().equals( game.getColor() ) )
                 {
                     return true;
                 }
@@ -224,7 +189,12 @@ public class Player
             }
             else
             {
-                return true;
+                if ( hand.get( index ).getColor() != null
+                    && hand.get( index ).getColor().equals( game.getColor() ) )
+                {
+                    return true;
+                }
+                return false;
             }
 
         }
@@ -232,6 +202,12 @@ public class Player
     }
 
 
+    /**
+     * 
+     * checks is p4 is playable by seeing if everything else is taken
+     * 
+     * @return if p4 playable
+     */
     public boolean isP4Playable()
     {
         for ( int x = 0; x < hand.size(); x++ )
@@ -243,6 +219,7 @@ public class Player
         }
         return true;
     }
+
 
     /**
      * 

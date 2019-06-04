@@ -18,8 +18,9 @@ public class Server
 {
     // initialize socket and input stream
     int port;
-    
+
     ServerSocket ss = null;
+
     private Socket s0 = null;
 
     private Socket s1 = null;
@@ -40,8 +41,7 @@ public class Server
 
 
     /**
-     * constructor, initializes server on port 5000 (if taken goes up by one
-     * until ok)
+     * constructor, initializes server on port 5000
      * 
      * @param game
      *            the game server is sending input to (by initializing
@@ -62,16 +62,16 @@ public class Server
 
     /**
      * 
-     * adds a client
+     * adds a client by creating a new socket on the same port and creating a
+     * dataoutputstream for it
      * 
      * @return Socket of client
      */
     public void addClient()
     {
-        System.out.println("Port: " + port);
         try
         {
-            
+
             if ( out0 == null )
             {
                 s0 = ss.accept();
@@ -104,7 +104,7 @@ public class Server
 
     /**
      * 
-     * initializes the clientlistener
+     * initializes the clientlistener for each client
      * 
      * @param game
      *            game to put input to
@@ -124,14 +124,14 @@ public class Server
 
     /**
      * 
-     * broadcasts message to clients
+     * broadcasts message to all clients
      * 
      * @param str
+     *            message
      */
     public void broadcast( String str )
 
     {
-        System.out.println("***TESTING*** Output: " + str);
         try
         {
             if ( out0 != null )

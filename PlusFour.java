@@ -41,7 +41,6 @@ public class PlusFour extends Wild
     }
 
 
-    
     /**
      * action of the plus four card
      * 

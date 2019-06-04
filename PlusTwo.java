@@ -37,7 +37,19 @@ public class PlusTwo extends ActionCard
     {
         for ( int x = 0; x < 2; x++ )
         {
-            getCurrGame().getPlayers()[idNum + 1].drawCard();
+            if ( getCurrGame().getDirection() )
+            {
+                idNum = ( idNum + 1 ) % 4;
+            }
+            else
+            {
+                idNum--;
+                if ( idNum == -1 )
+                {
+                    idNum = 3;
+                }
+            }
+            getCurrGame().getPlayers()[idNum].drawCard();
             getCurrGame().setColor( getColor() );
 
         }
@@ -59,7 +71,7 @@ public class PlusTwo extends ActionCard
             }
             getCurrGame().setCurrplayer( x );
         }
-        getCurrGame().getServer().broadcast( idNum + "pp2" );
+        getCurrGame().getServer().broadcast( idNum + "pp2" + getColor() );
         getCurrGame().getServer().broadcast( "k" );
     }
 }

@@ -5,7 +5,8 @@ import java.net.UnknownHostException;
 
 /**
  * 
- * the logic of the game. runs a game of uno with four players.
+ * The logic of the Uno game, which runs on four players. This class will also
+ * keep track of the current stats and hands of each player.
  *
  * @author Benjamin
  * @version May 27, 2019
@@ -69,24 +70,19 @@ public class Game
         turnDone = false;
         System.out.println( "Game Start" );
         Card c = gameDeck.draw();
-        while ( !(c instanceof NumberCard) )
+        while ( !( c instanceof NumberCard ) )
         {
             c = gameDeck.draw();
         }
         pile = c;
         currplayer = -1;
-        color = pile.getColor();
-        number = ( (NumberCard)pile ).getNumber();
-        server.broadcast( "s" + number + color );
-        server.broadcast( "c" + color );
-        server.broadcast( "n" + number );
         startGame();
 
     }
 
 
     /**
-     * for testing purposes
+     * for testing purposes in JUnit
      * 
      * @param test
      */
@@ -103,7 +99,8 @@ public class Game
 
 
     /**
-     * each player begins by drawing seven cards from the top of the deck
+     * each player begins by drawing seven cards from the top of the deck, and
+     * message is sent to server
      */
     public void startGame()
     {
@@ -116,6 +113,11 @@ public class Game
                 players[x].drawCard();
             }
         }
+        color = pile.getColor();
+        number = ( (NumberCard)pile ).getNumber();
+        server.broadcast( "s" + number + color );
+        server.broadcast( "c" + color );
+        server.broadcast( "n" + number );
 
         runGame();
     }
@@ -139,7 +141,8 @@ public class Game
             }
             turnDone = false;
             currplayer = currplayer % 4;
-            if(currplayer == -1) {
+            if ( currplayer == -1 )
+            {
                 currplayer = 3;
             }
             players[currplayer].turn();
@@ -205,7 +208,8 @@ public class Game
 
     /**
      * 
-     * precondition pos of played card is not a Wild or PlusFour card
+     * precondition pos of played card is not a Wild or PlusFour card otherwise
+     * broadcasts card is played
      * 
      * @param player
      *            current player index
@@ -215,29 +219,27 @@ public class Game
 
     public void cardPlay( int player, int pos )
     {
-        System.out.println("***TESTING*** Recieved: " + player + pos);
         Card c = players[player].getHand().get( pos );
         if ( c instanceof NumberCard )
         {
-            pile = players[player].getHand().get( pos ) ;
+            pile = players[player].getHand().get( pos );
             setNumber( ( (NumberCard)c ).getNumber() );
             setColor( c.getColor() );
-            server.broadcast( player + "p" + ((NumberCard)c ).getNumber() + c.getColor() );
+            server.broadcast( player + "p" + ( (NumberCard)c ).getNumber() + c.getColor() );
             server.broadcast( "c" + c.getColor() );
             server.broadcast( "n" + ( (NumberCard)c ).getNumber() );
             players[player].getHand().remove( pos );
-            System.out.println("Player " + (player + 1) + " p " + ((NumberCard)c ).getNumber() + c.getColor());
-            System.out.println("Color changed to: " + c.getColor());
-            System.out.println("Number changed to: " + ( (NumberCard)c ).getNumber());
+            System.out.println(
+                "Player " + ( player + 1 ) + " p " + ( (NumberCard)c ).getNumber() + c.getColor() );
+            System.out.println( "Color changed to: " + c.getColor() );
+            System.out.println( "Number changed to: " + ( (NumberCard)c ).getNumber() );
 
         }
         else
         {
-            System.out.println("***TESTING*** Recieved: ACTION CARD PLAYED" );
             if ( !( pile instanceof Wild ) )
             {
-                System.out.println("***TESTING*** Recieved: NON WILD ACTION CARD PLAYED" );
-                pile = players[player].getHand().get( pos ) ;
+                pile = players[player].getHand().get( pos );
                 ( (ActionCard)( pile ) ).doAction( player );
                 players[player].getHand().remove( pos );
             }
@@ -246,7 +248,8 @@ public class Game
 
 
     /**
-     * precondition pos of played card is a Wild or PlusFour card
+     * precondition pos of played card is a Wild or PlusFour card changes color,
+     * broadcasts, then broadcasts played
      * 
      * @param player
      *            current player index
@@ -262,7 +265,7 @@ public class Game
         players[player].getHand().remove( pos );
         server.broadcast( "c" + color );
         server.broadcast( "n" + number );
-        System.out.println("Player " + (player + 1) + " played " + color);
+        System.out.println( "Player " + ( player + 1 ) + " played " + color );
     }
 
 
@@ -292,7 +295,7 @@ public class Game
      */
     public void endGame( int winnerID )
     {
-        server.broadcast( "4end" );
+        server.broadcast( "4e" + winnerID );
         System.out.println( "Game Ended. Winner: " + ( winnerID + 1 ) );
         System.exit( 0 );
     }
@@ -488,15 +491,19 @@ public class Game
     {
         this.currplayer = currplayer;
     }
+
+
     /**
      * 
      * main method. Starts a new Game by creating a game object.
-     * @param args no arguments needed for main method
+     * 
+     * @param args
+     *            no arguments needed for main method
      */
     public static void main( String args[] )
     {
-        
+
         Game g = new Game();
-        
+
     }
 }

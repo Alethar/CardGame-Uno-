@@ -36,7 +36,7 @@ public class Reverse extends ActionCard
     public void doAction( int idNum )
     {
         getCurrGame().setDirection( !getCurrGame().getDirection() );
-        getCurrGame().getServer().broadcast( idNum + "pr" );
+        getCurrGame().getServer().broadcast( idNum + "pr" + getColor() );
         getCurrGame().getServer().broadcast( "r" );
     }
 }

@@ -8,7 +8,7 @@ import java.util.*;
  * acts as networking, and broadcasts messages to clients
  *
  * @author Eric
- * @version May 27, 2019
+ * @version May 20, 2019
  * @author Period: 3
  * @author Assignment: UnoGame
  *
@@ -49,7 +49,7 @@ public class OldServer
                 try
                 {
                     server = new ServerSocket( port );
-                    System.out.println("Port: " + port);
+                    System.out.println( "Port: " + port );
                 }
                 catch ( IOException e )
                 {

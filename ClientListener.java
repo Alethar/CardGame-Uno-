@@ -63,7 +63,6 @@ public class ClientListener extends Thread
                 if ( !clientInput.equals( prevString )
                     || clientInput.substring( 1, 2 ).equals( "u" ) )
                 {
-                    System.out.println( "It is being taken as input" );
                     int clientID = Integer.parseInt( clientInput.substring( 0, 1 ) );
                     // client number 0 - 3
                     System.out
@@ -76,6 +75,7 @@ public class ClientListener extends Thread
                         }
                         else
                         {
+                            game.setTurnDone( true );
                             if ( clientInput.substring( 1, 2 ).equals( "p" ) )
                             {
                                 if ( !( game.getPlayers()[clientID].getHand()
@@ -116,7 +116,7 @@ public class ClientListener extends Thread
                             }
 
                         }
-                        game.setTurnDone( true );
+
                     }
                     else// input from server instead of clients
                     {
@@ -126,7 +126,6 @@ public class ClientListener extends Thread
                 }
                 else
                 {
-                    System.out.println( "Not valid input" );
                 }
             }
             catch ( IOException e )

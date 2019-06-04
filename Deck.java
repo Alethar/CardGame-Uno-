@@ -33,7 +33,7 @@ public class Deck
 
 
     /**
-     * replenishes deck with all necessary cards to play
+     * replenishes queue with all necessary cards to play, and shuffles it
      */
     public void replenishDeck()
     {
